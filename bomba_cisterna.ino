@@ -16,20 +16,25 @@ limitations under the License.
 
 #define _KI6O4_ESP8266  //only IN2-5 OUT1-3
 #include <KI6O4.h>
-bool run = false;
+
+bool run = false; //variable que marca quela bomba esta operando
 
 void setup(){
-  ki6o4.begin();
-  Serial.begin(115200);
+  ki6o4.begin(); //iniciando modulo KI6O4
+  Serial.begin(115200); //iniciando comunicacion serial
 }
 
 void loop(){
 
+  //leyendo entradas
   bool manual = ki6o4.read(IN2);
   bool start = ki6o4.read(IN3);
   bool stop = ki6o4.read(IN4);
   bool low = ki6o4.read(IN5);
 
+  //logica
+  //la bomba solo enciende si se esta manual y no esta low
+  //y se presiona el boton start
   if(!manual && !low){
     if(start){
       run = true;
@@ -41,6 +46,6 @@ void loop(){
     run = false;
   }
 
-  ki6o4.write(OUT1,run);
-  ki6o4.write(OUT2,low);
+  ki6o4.write(OUT1,run); //salida de activacion de la bomba
+  ki6o4.write(OUT2,low); //salida de activacion del led "low"
 }

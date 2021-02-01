@@ -17,18 +17,6 @@ void mqttPublish(){
   client.publish(MQTT_TOPIC_AVAILABILITY,"online");
 }
 
-// void sendConfig(){
-//   Serial.println("sending");
-//   // state = !state;
-//   mqttPublish();
-//   // doc["name"] = ESP_ID;
-//   // doc["device_class"] = "window";
-//   // doc["state_topic"] ="homeassistant/binary_sensor/habitacion_erick/state";
-//   //
-//   // serializeJson(doc,str,200);
-//   // client.publish("homeassistant/binary_sensor/habitacion_erick/config",str);
-// }
-
 //////////////////////////////////
 //////////////////////////////////
 void callback(char* topic, byte* payload, unsigned int length) {
@@ -39,11 +27,11 @@ void callback(char* topic, byte* payload, unsigned int length) {
   if(String(topic) == String(MQTT_COMMAND_TOPIC)){
     if(payload[0] == '0'){
       machine.changeState("stopped");
-      ki6o4.print("State changed: Running\n");
+      ki6o4.print("State changed: Stopped\n");
     }
     else if(payload[0] == '1'){
       machine.changeState("running");
-      ki6o4.print("State changed: Stopped\n");
+      ki6o4.print("State changed: Running\n");
     }
   }
 }
